@@ -1,0 +1,150 @@
+spring:
+  config:
+    activate:
+      on-profile: milkomeda
+
+milkomeda:
+  show-log: true
+
+  sirius:
+    # 开启无需添加属性注解的参数自动填充，如果用手动添加方式改为false
+    auto-add-fill: true
+    # 配置自动插值（默认为insert）
+    auto-interpolates:
+      - fields: [ "createTime" ]
+        ps-value: ${collections.dateObject}
+      - fields: [ "updateTime" ]
+        ps-value: ${collections.dateObject}
+        field-fill: insert_update
+      - fields: [ "createUser" ]
+        # 运行时EL解析：(取值表达式，类型：INT/LONG/BOOL/STRING/DATE/OBJECT）
+        ps-value: el(@crust.getUserInfo().uid, LONG)
+
+  comet:
+    enable-read-request-body: true
+    enable-read-response-body: true
+
+  crust:
+    # token方式
+    stateless: true
+    # 使用对称密钥生成token
+    secure-key: ice-api_secure_key
+    # token过期时间
+    expire: 1h
+    # 请求头token字段（默认为token）
+    #token-name: token
+    # 自动token刷新的响应头字段（内部会根据设置的token过期时间来计算刷新时机）
+    refresh-token-name: token
+    # 默认为/login
+    #login-url: /login
+    allow-static-urls:
+      - /v3/api-docs
+    resource-mappings:
+      - pathPatterns: ["/doc.html","/swagger-ui.html","/v3/api-docs"]
+        targetLocations: "classpath:/META-INF/resources/"
+      - pathPatterns: "/webjars/**"
+        targetLocations: "classpath:/META-INF/resources/webjars/"
+
+  ice:
+    # 在分布式布署时，需要设置实例名
+    instance-name: milkomeda-demo
+    # 开启Job作业（作为消费端使用时，设置为false）
+    #enable-job-timer: false
+    # 是否用于分布式job作业
+    #enable-job-timer-distributed: true
+    # Job作业频率（默认5s）
+    delay-bucket-poll-rate: 2s
+    # 延迟队列分桶数量（默认为3）
+    delay-bucket-count: 2
+    # 消费执行超时时间（默认30s）
+    ttr: 20s
+    # 重试时添加延迟增长因子（默认为1，计算公式：delay * (retryCount++) * factor）
+    #retry-delay-multi-factor: 2
+    # 开启Task功能（使用@EnableIce时消费端需要配置为true）
+    enable-task: true
+    # 最大消费个数（默认为10）
+    task-topic-pop-max-size: 5
+    # 消费轮询间隔（默认5s）
+    task-execute-rate: 2s
+    # 消费处理器支持多个监听器
+    multi-topic-listener-per-handler: true
+    # TTR超载任务进入Dead queue
+    enable-retain-to-dead-queue-when-ttr-overload: true
+    # 开启job任务监控（如果想通过后台页面查看job状态信息）
+    introspect:
+      enable: true
+      # 查询监测数据使用的时间排序类型（默认为update_time：每次状态修改都更新时间）
+      index-type: update_time
+      # 监测数据存储方案（默认为redis）
+      inspector-type: mongodb
+
+  hydrogen:
+    transaction:
+      enable: true
+      pointcut-expression: execution(* com.yizzuide.ice.api.service.*.*(..))
+      # 事务60秒超时回滚（支持自定义时间单位，不指定单位默认单位：s）
+      rollback-when-timeout: 60s
+      read-only-append-prefix:
+        - get*
+        - query*
+        - find*
+        - list*
+
+    uniform:
+      enable: true
+      # 强制code字段输出类型
+      code-type: int
+      response:
+        # 500服务器内部异常处理
+        status: 200 # 这个是HTTP标准响应码，不是业务返回字段
+        code: -1 # 支持改字段名：code[别名]，返回的是这个别名
+        message: 服务器繁忙，请稍后再试！
+        # 下面字段内部会获取异常栈信息，外面不需要添加值，列出需要的字段即可
+        error-stack-msg[innerErrInfo]:
+        error-stack[innerErrInfoDesc]:
+
+        # 正常响应默认配置
+        200:
+          code: 0
+          message: "success"
+          data: ${collections.emptyMap}
+
+        400:
+          status: 200
+          code: -1
+          message:
+
+        # Token方式认证失败（默认code为401）
+        401:
+          status: 200
+          code: 401
+          message:
+
+        # URL Not Found
+        404:
+          status: 200
+          code: 404
+          message:
+
+        405:
+          status: 200
+          code: 405
+          message:
+
+        # 捕捉异常抛出处理
+        customs:
+          - clazz: com.baomidou.kaptcha.exception.KaptchaException
+            status: 200
+            code: -1
+            message: 验证码无效！
+          # 登录错误异常
+          - clazz: org.springframework.security.core.AuthenticationException
+            status: 200
+            code: -1
+            message: 用户名或密码错误！
+          # 访问权限异常
+          - clazz: org.springframework.security.access.AccessDeniedException
+            status: 200
+            code: -1
+            message: 当前访问权限不足！
+

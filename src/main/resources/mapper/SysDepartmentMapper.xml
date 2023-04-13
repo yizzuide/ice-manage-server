@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yizzuide.ice.api.mapper.SysDepartmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.yizzuide.ice.api.domain.SysDepartment">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="departmentName" column="department_name" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="pid" column="pid" jdbcType="BIGINT"/>
+            <result property="parentName" column="parent_name" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+            <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,department_name,phone,
+        address,pid,parent_name,create_time,update_time,
+        order_num,is_delete
+    </sql>
+</mapper>

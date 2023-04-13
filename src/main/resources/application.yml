@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: ice-api
+  profiles:
+    active: dev
+    group:
+      dev: milkomeda
