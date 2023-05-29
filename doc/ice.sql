@@ -1,6 +1,9 @@
 -- 创建数据库
 CREATE DATABASE IF NOT EXISTS ice default charset utf8mb4 COLLATE utf8mb4_general_ci;
 
+-- 使用数据库
+USE ice;
+
 -- 创建相关表
 create table sys_department
 (

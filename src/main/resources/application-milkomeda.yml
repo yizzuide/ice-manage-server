@@ -23,6 +23,9 @@ milkomeda:
   comet:
     enable-read-request-body: true
     enable-read-response-body: true
+    response-interceptors:
+      uniform:
+        enable: true
 
   crust:
     # token方式
@@ -102,12 +105,6 @@ milkomeda:
         # 下面字段内部会获取异常栈信息，外面不需要添加值，列出需要的字段即可
         error-stack-msg[innerErrInfo]:
         error-stack[innerErrInfoDesc]:
-
-        # 正常响应默认配置
-        200:
-          code: 0
-          message: "success"
-          data: ${collections.emptyMap}
 
         400:
           status: 200
