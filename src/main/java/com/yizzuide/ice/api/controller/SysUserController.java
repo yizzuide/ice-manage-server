@@ -68,7 +68,7 @@ public class SysUserController {
     }
 
     @PreAuthorize("@crust.permitAny('sys:user:select')")
-    @GetMapping("list")
+    @RequestMapping("list")
     public ResultVO<UniformPage<SysUser>> queryPage(@CometParam UniformQueryPageData<SysUser> queryPageData) {
         return UniformResult.ok(sysUserService.selectByPage(queryPageData));
     }
