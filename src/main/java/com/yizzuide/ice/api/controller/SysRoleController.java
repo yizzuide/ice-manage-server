@@ -34,7 +34,7 @@ public class SysRoleController {
     @Resource
     private SysRolePermissionService sysRolePermissionService;
 
-    @GetMapping("list")
+    @RequestMapping("list")
     public ResultVO<?> queryPage(@CometParam UniformQueryPageData<SysRole> queryPageData) {
         UniformPage<SysRole> uniformPage = sysRoleService.selectByPage(queryPageData);
         return UniformResult.ok(uniformPage);

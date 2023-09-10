@@ -32,10 +32,10 @@
 
     <select id="findPermissionByUserId" resultType="com.yizzuide.ice.api.domain.SysPermission">
         select distinct sp.id, sp.parent_id, sp.label, sp.code, sp.url, sp.type, sp.icon, sp.remark, sp.path, sp.name, sp.order_num from
-            sys_user as u left join ice.sys_user_role sur on u.id = sur.user_id
+            sys_user as u left join sys_user_role sur on u.id = sur.user_id
                           left join sys_role sr on sur.role_id = sr.id
                           left join sys_role_permission srp on sr.id = srp.role_id
-                          left join ice.sys_permission sp on srp.permission_id = sp.id
+                          left join sys_permission sp on srp.permission_id = sp.id
         where u.id=#{userId}
         order by sp.id
     </select>

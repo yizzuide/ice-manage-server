@@ -46,7 +46,7 @@ public class SysPermissionController {
         return UniformResult.ok(permissionList);
     }
 
-    @GetMapping("list")
+    @RequestMapping("list")
     public ResultVO<?> queryPage(@CometParam UniformQueryPageData<SysPermission> queryPageData) {
         UniformPage<SysPermission> uniformPage = sysPermissionService.selectByPage(queryPageData);
         return UniformResult.ok(uniformPage);
