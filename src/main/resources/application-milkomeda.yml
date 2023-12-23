@@ -7,6 +7,7 @@ milkomeda:
   show-log: true
 
   sirius:
+    db-type: mysql
     # 开启无需添加属性注解的参数自动填充，如果用手动添加方式改为false
     auto-add-fill: true
     # 配置自动插值（默认为insert）
