@@ -14,7 +14,7 @@ import com.yizzuide.ice.api.service.SysRoleService;
 import com.yizzuide.ice.api.service.SysUserRoleService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 

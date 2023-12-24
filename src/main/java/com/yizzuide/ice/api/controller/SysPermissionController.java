@@ -2,25 +2,19 @@ package com.yizzuide.ice.api.controller;
 
 import com.github.yizzuide.milkomeda.comet.core.CometParam;
 import com.github.yizzuide.milkomeda.crust.CrustContext;
-import com.github.yizzuide.milkomeda.crust.CrustMenu;
 import com.github.yizzuide.milkomeda.crust.CrustPermission;
 import com.github.yizzuide.milkomeda.crust.CrustUserInfo;
 import com.github.yizzuide.milkomeda.hydrogen.uniform.ResultVO;
 import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformPage;
 import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformQueryPageData;
 import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformResult;
-import com.yizzuide.ice.api.domain.SysDepartment;
 import com.yizzuide.ice.api.domain.SysPermission;
-import com.yizzuide.ice.api.domain.SysRole;
 import com.yizzuide.ice.api.domain.SysUser;
-import com.yizzuide.ice.api.mapper.SysRolePermissionMapper;
 import com.yizzuide.ice.api.service.SysPermissionService;
-import org.springframework.security.access.annotation.Secured;
+import jakarta.annotation.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.stream.Collectors;
 

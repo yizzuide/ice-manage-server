@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.yizzuide.milkomeda.crust.CrustStatefulEntity;
 import com.github.yizzuide.milkomeda.sirius.PrefectType;
+import com.github.yizzuide.milkomeda.sirius.QueryAutoLinker;
+import com.github.yizzuide.milkomeda.sirius.QueryLinkers;
 import com.github.yizzuide.milkomeda.sirius.QueryMatcher;
 import lombok.Data;
 
@@ -73,12 +75,17 @@ public class SysUser implements CrustStatefulEntity {
     /**
      * 部门编号
      */
+    @QueryAutoLinker(links = "departName->departmentName", type = SysDepartment.class)
     private Long departmentId;
 
     /**
      * 部门名称
      */
     private String departmentName;
+
+
+    @TableField(exist = false)
+    private String departName;
 
     /**
      * 性别（0-男，1-女）

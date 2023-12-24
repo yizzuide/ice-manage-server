@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
  * Create at 2022/10/09 22:57
  */
 @Configuration
-
 public class Knife4jConfiguration {
     @Bean
     public Docket createRestApi() {

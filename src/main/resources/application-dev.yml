@@ -22,8 +22,6 @@ server:
     include-stacktrace: never
 
 spring:
-  application:
-    name: ice-api
   config:
     activate:
       on-profile: dev
@@ -42,7 +40,6 @@ spring:
     format:
       date: yyyy-MM-dd
       date-time: yyyy-MM-dd HH:mm:ss
-    throw-exception-if-no-handler-found: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     locale: zh_CN
@@ -76,10 +73,9 @@ spring:
       connection-timeout: 60000
       connection-test-query: SELECT 1
 
-  redis:
-    host: 127.0.0.1
-
   data:
+    redis:
+      host: 127.0.0.1
     mongodb:
       database: milkomeda
       host: localhost
@@ -105,19 +101,6 @@ logging:
   charset:
     console: UTF-8
     file: UTF-8
-
-kaptcha:
-  height: 40
-  width: 80
-  font:
-    color: black
-    name: Arial
-    size: 32
-  background-color:
-    from: lightGray
-    to: white
-  border:
-    enabled: false
 
 knife4j:
   # 开启增强配置

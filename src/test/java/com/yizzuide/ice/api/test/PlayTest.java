@@ -17,7 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.client.MockMvcWebTestClient;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
@@ -70,6 +70,6 @@ public class PlayTest {
     public void findRoleIds() {
         List<Long> ids = sysUserRoleService.findRoleListByUserId(1L);
         System.out.println(ids);
-        Assertions.assertTrue(ids.size() > 0);
+        Assertions.assertFalse(ids.isEmpty());
     }
 }

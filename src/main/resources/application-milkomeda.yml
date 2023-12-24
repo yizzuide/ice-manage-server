@@ -31,8 +31,6 @@ milkomeda:
   crust:
     # token方式
     stateless: true
-    # 使用对称密钥生成token
-    secure-key: ice-api_secure_key
     # token过期时间
     expire: 1h
     # 请求头token字段（默认为token）
@@ -118,7 +116,7 @@ milkomeda:
           code: 401
           message:
 
-        # URL Not Found
+        # Not Found
         404:
           status: 200
           code: 404
@@ -131,7 +129,7 @@ milkomeda:
 
         # 捕捉异常抛出处理
         customs:
-          - clazz: com.baomidou.kaptcha.exception.KaptchaException
+          - clazz: com.yizzuide.ice.api.extent.KaptchaVerifyException
             status: 200
             code: -1
             message: 验证码无效！

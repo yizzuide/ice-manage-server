@@ -9,7 +9,7 @@ import com.yizzuide.ice.api.domain.SysDepartment;
 import com.yizzuide.ice.api.service.SysDepartmentService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**

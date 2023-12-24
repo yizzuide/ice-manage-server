@@ -11,7 +11,7 @@ import com.yizzuide.ice.api.service.SysPermissionService;
 import com.yizzuide.ice.api.mapper.SysPermissionMapper;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 
 /**
