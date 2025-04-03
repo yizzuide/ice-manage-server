@@ -1,10 +1,8 @@
 package com.yizzuide.ice.api.service.impl;
 
-import com.github.yizzuide.milkomeda.crust.CrustEntity;
-import com.github.yizzuide.milkomeda.crust.CrustPerm;
-import com.github.yizzuide.milkomeda.crust.CrustPermission;
-import com.github.yizzuide.milkomeda.crust.CrustUserDetailsService;
+import com.github.yizzuide.milkomeda.crust.*;
 import com.yizzuide.ice.api.domain.SysPermission;
+import com.yizzuide.ice.api.domain.SysUser;
 import com.yizzuide.ice.api.service.SysPermissionService;
 import com.yizzuide.ice.api.service.SysUserRoleService;
 import com.yizzuide.ice.api.service.SysUserService;
@@ -43,17 +41,25 @@ public class UserDetailsService extends CrustUserDetailsService {
     }
 
     @Override
-    protected CrustPerm findPermissionsById(Serializable uid) {
-        List<Long> roleIds = sysUserRoleService.findRoleListByUserId((Long) uid);
-        boolean isAdmin = roleIds.contains(1L);
-        List<SysPermission> permissions;
-        // 如果是admin，查询所有权限列表
-        if (isAdmin) {
-            permissions = sysPermissionService.list();
-        } else {
-            permissions = sysPermissionService.findPermissionByUserId(Long.valueOf(uid.toString()));
-        }
-        return CrustPerm.builder().roleIds(roleIds).admin(isAdmin).permissionList(permissions).build();
+    protected CrustPermDetails buildPremDetails() {
+        return CrustPermDetails.builder()
+                .rolesCollector((userInfo, roleList) -> {
+                    // 将租户ID设置首要角色
+                    //roleList.add(((SysUser) userInfo.getEntity()).getCompanyId());
+                    // 添加系统角色
+                    List<Long> sysRoleIds = sysUserRoleService.findRoleListByUserId(userInfo.getUidLong());
+                    roleList.addAll(sysRoleIds);
+                })
+                // 用于多租户的角色过滤
+                //.rolesFilter(roleList -> roleList.subList(1, roleList.size()))
+                .adminRecognizer(roleList -> roleList.contains(1L))
+                .permsCollector((roleList, isAdmin) -> {
+                    // 如果是admin，查询所有权限列表
+                    if (isAdmin) {
+                        return sysPermissionService.list();
+                    }
+                    return sysPermissionService.findPermissionByRoleIds(roleList);
+                }).build();
     }
 
     @Override

@@ -7,4 +7,8 @@ package com.yizzuide.ice.api.extent;
  * Create at 2023/12/24 18:27
  */
 public class KaptchaVerifyException extends RuntimeException {
+
+    public KaptchaVerifyException(String message) {
+        super(message);
+    }
 }

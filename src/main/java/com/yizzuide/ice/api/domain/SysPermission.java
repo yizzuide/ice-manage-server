@@ -3,8 +3,6 @@ package com.yizzuide.ice.api.domain;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +24,7 @@ public class SysPermission implements CrustPermission, Serializable {
     /**
      * 权限编号
      */
+    @RefMatcher(type = RefMatcher.RefType.FOREIGN, foreignField = "permissionId", foreignType = SysRolePermission.class)
     @TableId(type = IdType.AUTO)
     private Long id;
 

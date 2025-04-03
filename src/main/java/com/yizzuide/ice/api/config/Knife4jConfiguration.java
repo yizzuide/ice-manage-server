@@ -52,7 +52,7 @@ public class Knife4jConfiguration {
     }
 
     // Springboot 2.6: 解决返回为null：springfox.documentation.spring.web.WebMvcPatternsRequestConditionWrapper.getPatterns
-    @Bean
+    /*@Bean
     public BeanPostProcessor springfoxHandlerProviderBeanPostProcessor() {
         return new BeanPostProcessor() {
             @Override
@@ -83,5 +83,5 @@ public class Knife4jConfiguration {
                 }
             }
         };
-    }
+    }*/
 }

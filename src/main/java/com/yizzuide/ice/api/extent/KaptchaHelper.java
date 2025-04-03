@@ -1,7 +1,9 @@
 package com.yizzuide.ice.api.extent;
 
+import com.github.yizzuide.milkomeda.universe.context.RedisHolder;
 import com.github.yizzuide.milkomeda.universe.context.WebContext;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
@@ -18,9 +20,12 @@ import java.util.Objects;
  * Create at 2023/12/24 18:03
  */
 public class KaptchaHelper {
-    public static void out(DefaultKaptcha defaultKaptcha) throws IOException {
+
+    private static final String SESSION_KEY = "login_kaptcha_code";
+
+    public static void out(DefaultKaptcha defaultKaptcha, String uuid) throws IOException {
         String text = defaultKaptcha.createText();
-        Objects.requireNonNull(WebContext.getRequestAttributes()).getRequest().getSession().setAttribute("Kaptcha-Code", text);
+        RedisHolder.getStringRedisTemplate().boundHashOps(SESSION_KEY).put(uuid, text);
 
         var response = WebContext.getRawResponse();
         // 设置请求头为输出图片类型
@@ -28,15 +33,18 @@ public class KaptchaHelper {
         response.setHeader(HttpHeaders.PRAGMA, "No-cache");
         response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
         response.setDateHeader(HttpHeaders.EXPIRES, 0);
+
         OutputStream outputStream = response.getOutputStream();
         BufferedImage image = defaultKaptcha.createImage(text);
         ImageIO.write(image, "png", outputStream);
     }
 
-    public static void verify(String code) {
-        var origCode = Objects.requireNonNull(WebContext.getRequestAttributes()).getRequest().getSession().getAttribute("Kaptcha-Code");
+    public static void verify(String code, String uuid) {
+        BoundHashOperations<String, Object, Object> hashOps = RedisHolder.getStringRedisTemplate().boundHashOps(SESSION_KEY);
+        var origCode = hashOps.get(uuid);
         if (!Objects.equals(origCode, code)) {
-            throw new KaptchaVerifyException();
+            throw new KaptchaVerifyException("verify fail");
         }
+        hashOps.delete(uuid);
     }
 }

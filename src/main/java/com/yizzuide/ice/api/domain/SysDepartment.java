@@ -10,6 +10,7 @@ import lombok.Data;
 import org.springframework.core.Ordered;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -23,6 +24,7 @@ public class SysDepartment implements Serializable, Ordered {
     /**
      * 部门编号
      */
+    @RefMatcher(type = RefMatcher.RefType.FOREIGN, foreignField = "departmentId", foreignType = SysUser.class)
     @TableId(type = IdType.AUTO)
     private Long id;
 
@@ -74,7 +76,7 @@ public class SysDepartment implements Serializable, Ordered {
     /**
      * 排序
      */
-    @QueryMatcher(prefect = PrefectType.OrderByPost)
+    @QueryMatcher(prefect = PrefectType.OrderBy)
     private Integer orderNum;
 
     /**
@@ -83,6 +85,7 @@ public class SysDepartment implements Serializable, Ordered {
     @JsonIgnore
     private Integer isDelete;
 
+    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

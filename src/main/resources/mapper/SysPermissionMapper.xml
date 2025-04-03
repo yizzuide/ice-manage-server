@@ -39,4 +39,16 @@
         where u.id=#{userId}
         order by sp.id
     </select>
+    <select id="findPermissionByRoleIds" resultType="com.yizzuide.ice.api.domain.SysPermission">
+        select distinct sp.id, sp.parent_id, sp.label, sp.code, sp.url, sp.type, sp.icon, sp.remark, sp.path, sp.name, sp.order_num from
+            sys_role_permission as srp
+                          left join sys_permission sp on srp.permission_id = sp.id
+        where srp.role_id in
+        <foreach item="roleId" collection="list" open="(" separator="," close=")">
+            #{roleId}
+        </foreach>
+        order by sp.id
+    </select>
+
+
 </mapper>

@@ -8,6 +8,7 @@ import java.util.Date;
 
 import com.github.yizzuide.milkomeda.sirius.PrefectType;
 import com.github.yizzuide.milkomeda.sirius.QueryMatcher;
+import com.github.yizzuide.milkomeda.sirius.RefMatcher;
 import lombok.Data;
 
 /**
@@ -20,6 +21,7 @@ public class SysRole implements Serializable {
     /**
      * 角色编号
      */
+    @RefMatcher(type = RefMatcher.RefType.FOREIGN, foreignField = "roleId", foreignType = SysUserRole.class)
     @TableId(type = IdType.AUTO)
     private Long id;
 

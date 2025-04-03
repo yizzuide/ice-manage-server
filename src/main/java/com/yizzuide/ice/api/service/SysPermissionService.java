@@ -17,4 +17,11 @@ public interface SysPermissionService extends IPageableService<SysPermission> {
      * @return SysPermission list
      */
     List<SysPermission> findPermissionByUserId(Long userId);
+
+    /**
+     * 根据角色id查询
+     * @param roleIds 角色id列表
+     * @return SysPermission
+     */
+    List<SysPermission> findPermissionByRoleIds(List<Long> roleIds);
 }

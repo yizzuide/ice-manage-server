@@ -9,13 +9,11 @@ import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformResult;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.yizzuide.ice.api.domain.SysUser;
 import com.yizzuide.ice.api.extent.KaptchaHelper;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,9 +33,9 @@ public class AuthController {
     private DefaultKaptcha defaultKaptcha;
 
     @CrustAnon
-    @GetMapping("/code/render")
-    public void render(HttpServletResponse response) throws IOException { // 使用Response流写出必须添加HttpServletResponse参数，否则Spring Security抛异常
-        KaptchaHelper.out(defaultKaptcha);
+    @GetMapping("/code/render/{uuid}")
+    public void render(@Parameter(description = "种子ID") @PathVariable(name = "uuid") String uuid, @Parameter(hidden = true) HttpServletResponse response) throws IOException { // 使用Response流写出必须添加HttpServletResponse参数，否则Spring Security抛异常
+        KaptchaHelper.out(defaultKaptcha, uuid);
     }
 
     @ResponseBody
@@ -46,8 +44,9 @@ public class AuthController {
         String username = data.get("username");
         String password = data.get("password");
         String code = data.get("code");
+        String uuid = data.get("uuid");
 
-        KaptchaHelper.verify(code);
+        KaptchaHelper.verify(code, uuid);
 
         CrustUserInfo<SysUser, CrustPermission> userInfo = CrustContext.get().login(username, password, SysUser.class);
         Map<String, Object> body = new HashMap<>();
