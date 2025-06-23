@@ -102,11 +102,32 @@ logging:
     console: UTF-8
     file: UTF-8
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+    groups:
+      enabled: true
+  packages-to-scan: com.yizzuide.ice.api.controller
+  group-configs:
+    - group: '系统数据管理'
+      paths-to-match: '/manage/**'
+    - group: '任务管理'
+      paths-to-match: '/job/**'
+
+# knife4j的增强配置
 knife4j:
-  # 开启增强配置
   enable: true
-  # 生产环境屏蔽
+  # 生产环境禁止访问
   production: ${condition.equals(${spring.profiles.active}, prod)}
+  setting:
+    language: zh_cn
+    # @RequestMapping只显示POST方式
+    enable-filter-multipart-apis: true
+    enable-filter-multipart-api-method-type: POST
 
 
 

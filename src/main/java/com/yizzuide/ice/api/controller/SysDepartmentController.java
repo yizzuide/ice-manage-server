@@ -7,6 +7,7 @@ import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformQueryPageData;
 import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformResult;
 import com.yizzuide.ice.api.domain.SysDepartment;
 import com.yizzuide.ice.api.service.SysDepartmentService;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.annotation.Resource;

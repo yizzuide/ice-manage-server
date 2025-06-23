@@ -39,13 +39,14 @@ milkomeda:
     refresh-token-name: token
     # 默认为/login
     #login-url: /login
-    allow-static-urls:
-      - /v3/api-docs
     resource-mappings:
-      - pathPatterns: ["/doc.html","/swagger-ui.html","/v3/api-docs"]
+      - pathPatterns: [ "/doc.html","/swagger-ui.html","/v3/api-docs" ]
         targetLocations: "classpath:/META-INF/resources/"
       - pathPatterns: "/webjars/**"
         targetLocations: "classpath:/META-INF/resources/webjars/"
+    addition-permit-urls:
+      - /v3/api-docs/**
+      - /swagger-ui/**
 
   ice:
     # 在分布式布署时，需要设置实例名

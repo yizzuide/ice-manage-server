@@ -10,9 +10,10 @@ import com.github.yizzuide.milkomeda.ice.Ice;
 import com.github.yizzuide.milkomeda.ice.Job;
 import com.github.yizzuide.milkomeda.ice.inspector.JobStatInfo;
 import com.github.yizzuide.milkomeda.ice.inspector.JobWrapper;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ import java.util.Map;
  * <br />
  * Create at 2022/10/07 20:30
  */
-@Api(tags = "Job API")
+@Tag(name = "Job API")
 @ApiSupport(author = "yizzuide")
 @RestController
 @RequestMapping("job")
@@ -40,8 +41,7 @@ public class JobController {
      * 添加Job延迟任务
      * @param job 必需设置属性：id（唯一id), topic（消费Topic标识）, delay（延迟ms), body（JSON业务数据）
      */
-    @ApiOperation("添加job延迟")
-    @ApiImplicitParam(name = "job", value = "job信息对象", required = true)
+    @Operation(summary = "添加job延迟", security = @SecurityRequirement(name = "token"))
     @PreAuthorize("@crust.permitAny('service:task:ice:push')")
     @PostMapping("push")
     public ResultVO<?> pushJob(@RequestBody Job<?> job) {

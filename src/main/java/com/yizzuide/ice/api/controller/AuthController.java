@@ -9,6 +9,7 @@ import com.github.yizzuide.milkomeda.hydrogen.uniform.UniformResult;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.yizzuide.ice.api.domain.SysUser;
 import com.yizzuide.ice.api.extent.KaptchaHelper;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.util.Map;
  * <br />
  * Create at 2022/10/08 18:35
  */
+@Hidden
 @Controller
 public class AuthController {
 

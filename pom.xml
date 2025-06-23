@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>3.2.12</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -23,7 +23,7 @@
         <mybatis.version>3.0.3</mybatis.version>
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <pagehelper.version>1.4.7</pagehelper.version>
-        <knife4j.version>3.0.3</knife4j.version>
+        <knife4j.version>4.4.0</knife4j.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
@@ -63,7 +63,7 @@
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
         <dependency>
